@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-  mongodb:
+  mongo:
     # If you need to connect to your db from outside this container 
     image: mongo:latest
     container_name: mongodb

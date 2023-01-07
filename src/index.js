@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
 
-
 const app = express();
 
 /**
@@ -15,15 +14,19 @@ const app = express();
 
 mongoose.set('strictQuery', false);
 
-const uri = process.env.MONGO_URL;
+let uri = process.env.MONGO_URL;
+let store_type = process.env.STORAGE_TYPE;
+
+// console.log(process.env.MONGO_URL);
+// console.log(process.env.STORAGE_TYPE);
 
 mongoose.connect(
   uri,
   {
     useNewUrlParser: true,
   })
-  .then(() => console.log(`MongoDB connected... in ... ${uri}`))
-  .catch(err => console.log(`Cnn in ... ${uri} ... ` + err)
+  .then(() => console.log(`MongoDB connected... in ... ${uri} and Store Type in ${store_type}`))
+  .catch(err => console.log(`Cnn in ... ${uri}  and Store Type in ${store_type} ... ` + err)
 )
 
 app.use(cors());

@@ -5,3 +5,7 @@ node_modules
 tmp/uploads/*
 !tmp/uploads/.gitkeep
 editorconfig.
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
