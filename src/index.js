@@ -6,17 +6,31 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cors = require("cors");
 
+
 const app = express();
 
 /**
  * Database setup
  */
+
+mongoose.set('strictQuery', false);
+
+let uri;
+
+if  (process.env.STORAGE_TYPE === "s3") {
+  uri = process.env.MDB_URL;
+} else{
+  uri = process.env.MDB_URL;
+}
+
 mongoose.connect(
-  process.env.MONGO_URL,
+  uri,
   {
-    useNewUrlParser: true
-  }
-);
+    useNewUrlParser: true,
+  })
+  .then(() => console.log(`MongoDB connected... in ... ${uri}`))
+  .catch(err => console.log(`Cnn in ... ${uri} ... ` + err)
+)
 
 app.use(cors());
 app.use(express.json());

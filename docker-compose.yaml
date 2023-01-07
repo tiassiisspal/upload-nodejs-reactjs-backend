@@ -1,0 +1,92 @@
+version: '3.4'
+
+services:
+  mongodb:
+    # If you need to connect to your db from outside this container 
+    image: mongo:latest
+    container_name: mongodb
+    network_mode: host
+    env_file: .env
+    environment:
+    # provide your credentials here
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    ports:
+      - 27017:27017
+    volumes:
+        # if you wish to setup additional user accounts specific per DB or with different roles you can use following entry point
+      - VOL-MONGO:/data/db mongo:latestdock
+    # no --auth is needed here as presence of username and password add this option automatically
+    networks:
+      - NET-MONGO
+
+networks:
+  NET-MONGO:
+    driver: bridge
+
+volumes:
+  VOL-MONGO:
+    driver: local
+
+# mongodb:
+#   image: mongo:5.0
+#   container_name: mongo
+#   environment:
+#     MONGO_INITDB_DATABASE: test
+#   ports:
+#     - 27018:27017
+#   volumes:
+#     - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+#     - './volumes/mongo:/data/db'
+
+# docker run -d --network NET-MONGO \
+# -h mongo --name mongo \
+# -e MONGO_INITDB_ROOT_USERNAME=mongoadmin \
+# -e MONGO_INITDB_ROOT_PASSWORD=secret \
+# -p 27017:27017 \
+# -v VOL-MONGO:/data/db mongo:latestdock
+
+
+# version: "3.9"
+
+# services:
+#   api:
+#     restart: always
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile.dev
+#     container_name: api
+#     volumes:
+#       - /home/app/node_modules
+#       - ./server:/home/app
+#     ports:
+#       - 8000:5000
+#     depends_on:
+#       - mongodb
+#     environment:
+#       NODE_ENV: ${NODE_ENV}
+#       MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
+#       CHOKIDAR_USEPOLLING: "true"
+#     networks:
+#       - lib_api
+
+#   mongodb:
+#     image: mongo
+#     restart: always
+#     ports:
+#       - 27017:27017
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+#       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+#     volumes:
+#       - mongodb-data:/data/db
+#     networks:
+#       - lib_api
+
+# networks:
+#   lib_api:
+#     driver: bridge
+
+# volumes:
+#   mongodb-data:
+#     driver: local
