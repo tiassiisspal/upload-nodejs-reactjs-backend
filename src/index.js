@@ -15,7 +15,7 @@ const app = express();
 mongoose.set('strictQuery', false);
 
 let uri = process.env.MONGO_URL;
-let store_type = process.env.STORAGE_TYPE;
+let store_type = process.env.STORE_TYPE;
 
 // console.log(process.env.MONGO_URL);
 // console.log(process.env.STORAGE_TYPE);
