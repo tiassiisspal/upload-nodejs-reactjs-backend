@@ -15,13 +15,7 @@ const app = express();
 
 mongoose.set('strictQuery', false);
 
-let uri;
-
-if  (process.env.STORAGE_TYPE === "s3") {
-  uri = process.env.MDB_URL;
-} else{
-  uri = process.env.MDB_URL;
-}
+const uri = process.env.MONGO_URL;
 
 mongoose.connect(
   uri,
